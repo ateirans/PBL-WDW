@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasil Pencarian - FEASTFOUND</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /*  GLOBAL */
+        :root {
+            --primary-orange: #f0a359;
+            --dark-orange: #e55c0a;
+            --brown-text: #4b3832;
+            --light-bg: #f9f5f0;
+            --card-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            --hover-shadow: 0 15px 35px rgba(124, 87, 71, 0.2);
+        }
+
+        body { 
+            padding-top: 120px; 
+            background-color: var(--light-bg); 
+            font-family: 'Poppins', sans-serif;
+            background-image: radial-gradient(circle at 50% 10%, #fffcf8 0%, var(--light-bg) 100%);
+            color: var(--brown-text);
+        } 
+        
+        main { 
+            padding: 40px 20px; 
+            min-height: 80vh; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
+
+        /* NAVBAR*/
+        .header-container {
+            background-color: rgba(50, 28, 2, 0.872); 
+            padding: 10px 25px; 
+            border-radius: 50px;
+            margin: 20px 20px 0 20px;
+             box-shadow: 0 4px 8px rgb(147, 5, 5);
+            height: 80px;
+            display: flex; align-items: center; 
+        }
+
+        .nav-btn {
+            background-color: #f0a359 !important;
+            color: white !important;
+            border: 2px solid #f0a359 !important;
+            border-radius: 50px !important;
+            padding: 8px 20px !important; 
+            font-size: 0.9rem !important; 
+            font-weight: bold !important;
+            text-transform: uppercase !important;
+            text-decoration: none !important;
+            margin: 0 5px !important;
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
+        }
+        .nav-btn:hover {
+            background-color: #ffffff !important;
+            color: #f0a359 !important;
+            transform: translateY(-2px);
+        }
+
+        #authButton.btn-danger {
+            background-color: #dc3545 !important;
+            border-color: #dc3545 !important;
+            color: white !important;
+        }
+        #authButton.btn-danger:hover {
+            background-color: #bb2d3b !important; 
+            border-color: #bb2d3b !important;
+        }
+
+        .nav-logo {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    flex-grow: 1; 
+    margin: 0 !important; 
+    padding: 0 10px; 
+}
+        /* Logo Navbar */
+       .nav-logo img {
+    height: 55px;
+    border-radius: 50%;
+    border: 2px solid #f0a359;
+}
+
+        /* Cart Icon */
+        .cart-circle {
+            width: 45px; height: 45px; 
+            background:#f0a359; color:white; border-radius:50%; 
+            display:flex; align-items:center; justify-content:center; 
+            box-shadow:0 2px 5px rgba(0,0,0,0.2);
+        }
+        .cart-circle i { font-size: 1.2rem; }
+
+        /* Search Input di Navbar */
+        .search-container-nav {
+            position: relative;
+            max-width: 250px; 
+        }
+        
+        .search-container-nav #searchInput {
+            width: 100%;
+            height: 40px;
+            padding: 8px 15px;
+            padding-right: 45px;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .search-btn-nav {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            height: 40px;
+            width: 45px;
+            background: #f0a359; 
+            color: white; 
+            border: none; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            cursor: pointer;
+             border-radius: 0 4px 4px 0;
+        }
+        .search-btn-nav:hover {
+            background: #e55c0a;
+        }
+        
+        /* Search Hero (Modernized) */
+        .search-hero { 
+            background: white; 
+            padding: 50px 40px; 
+            border-radius: 30px; 
+            box-shadow: var(--card-shadow); 
+            text-align: center; 
+            margin-bottom: 40px; 
+            position: relative;
+            overflow: hidden;
+        }
+        /* Ornamen latar belakang halus */
+        .search-hero::before {
+            content: ''; position: absolute; top: -50%; left: -20%; width: 200px; height: 200px;
+            background: rgba(240, 163, 89, 0.05); border-radius: 50%; z-index: 0;
+        }
+        .search-hero > * { position: relative; z-index: 1; }
+        
+        .custom-hero-search-box {
+            max-width: 650px; 
+            margin: 25px auto 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            border-radius: 50px;
+            background: white;
+            padding: 5px;
+            border: 1px solid #eee;
+        }
+
+        #liveSearchInput {
+            border-radius: 50px !important; 
+            padding: 15px 25px;
+            font-size: 1.1rem;
+            border: none;
+            background-color: transparent;
+        }
+        #liveSearchInput:focus { box-shadow: none; background: transparent; }
+
+        .search-btn-group {
+            background: linear-gradient(135deg, var(--primary-orange), var(--dark-orange)) !important;
+            border: none !important;
+            color: white;
+            padding: 12px 30px; 
+            border-radius: 50px !important; 
+            font-size: 1.2rem;
+            height: auto; 
+            transition: transform 0.2s;
+            box-shadow: 0 4px 15px rgba(229, 92, 10, 0.3);
+        }
+        .search-btn-group:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, var(--dark-orange), var(--primary-orange)) !important;
+        }
+
+        /*  GRID  */
+        .result-title-container {
+            padding: 0 10px; margin-bottom: 25px;
+            border-left: 6px solid var(--primary-orange);
+        }
+        #search-results-title { color: var(--brown-text); font-weight: 800; margin: 0; padding-left: 15px;}
+
+        .search-results-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 35px; margin-top: 20px; }
+        
+        /* PRODUCT CARD*/
+        .product-card { 
+            background-color: #ad1f06; 
+            text-decoration-color: #eee;
+            border: none; 
+            border-radius: 25px; 
+            padding: 20px; 
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease; 
+            position: relative; 
+            display: flex; flex-direction: column; height: 100%; 
+            overflow: hidden;
+        }
+        .product-card:hover { transform: translateY(-10px); box-shadow: var(--hover-shadow); }
+      
+        .product-card img { 
+            width: 100%; 
+            aspect-ratio: 4/3; 
+            object-fit: cover; 
+            border-radius: 20px; 
+            margin-bottom: 0px;
+            filter: brightness(0.98);
+            transition: filter 0.3s;
+        }
+        .product-card:hover img { filter: brightness(1.05); }
+
+        .vendor-badge { 
+            display: inline-block; align-self: flex-start;
+            background-color: #fff; 
+            color: var(--dark-orange); 
+            padding: 6px 14px; 
+            border-radius: 20px; 
+            font-size: 0.8rem; font-weight: 700; 
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            position: relative;
+            margin-top: -25px; 
+            margin-left: 10px;
+            z-index: 2;
+        }
+
+        .product-card h3 {
+            font-size: 1.25rem; font-weight: 700; color: var(--brown-text);
+            margin: 10px 0 5px; text-align: left;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;
+        }
+
+        .price-tag {
+            display: block; text-align: left;
+            font-size: 1.3rem; font-weight: 800;
+            color: var(--dark-orange); margin-bottom: 20px;
+        }
+
+        .product-action-buttons {
+            margin-top: auto; 
+            display: flex; gap: 10px;
+        }
+        .btn-buy-now {
+            flex-grow: 1;
+            background: linear-gradient(to right, var(--primary-orange), var(--dark-orange));
+            color: white; border: none;
+            padding: 12px; border-radius: 15px;
+            font-weight: 700; transition: 0.3s;
+        }
+        .btn-buy-now:hover { filter: brightness(1.1); box-shadow: 0 5px 15px rgba(229, 92, 10, 0.3); }
+        
+        .btn-add-cart-icon {
+            width: 48px; height: 48px;
+            display: flex; align-items: center; justify-content: center;
+            background: #fff6e8; color: var(--dark-orange);
+            border: 2px solid #ffe0b2; border-radius: 15px;
+            font-size: 1.2rem; transition: 0.3s;
+        }
+        .btn-add-cart-icon:hover { background: var(--primary-orange); color: white; border-color: var(--primary-orange); }
+        .empty-state { text-align: center; padding: 60px 20px; opacity: 0.7; }
+        .empty-state i { color: #e0d6ce; margin-bottom: 20px; }
+        .empty-state h4 { color: var(--brown-text); font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <header class="header-container fixed-top">
+        <nav class="navbar navbar-expand-lg p-0 w-100">
+            <div class="container-fluid px-0">
+                
+                <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#searchNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-between align-items-center" id="searchNavbar">
+                    
+                    <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-2 nav-links">
+                        <a href="login.html" id="authButton" onclick="handleAuth(event)" class="nav-btn auth-btn">
+                            LOGIN
+                        </a>
+                        <a href="index.html" class="nav-btn">
+                            HOME
+                        </a>
+                        <a href="index.html#product-list" class="nav-btn">
+                            MENU
+                        </a>
+                        <a href="index.html#about-section" class="nav-btn">
+                            ABOUT
+                        </a>
+                        <a href="index.html#contact-section" class="nav-btn">
+                            CONTACT
+                        </a>
+                    </div>
+
+                    <div class="nav-logo mx-3 text-center my-2 my-lg-0 d-flex justify-content-center align-items-center">
+    <a href="index.html"><img src="logopbl.png" alt="Logo" class="logo-img"></a>
+</div>
+
+                    <div class="d-flex justify-content-center justify-content-lg-end align-items-center search-and-cart gap-2">
+                        
+                        <div class="search-container-nav me-2"> 
+                            <input type="text" id="searchInput" placeholder="Cari..." class="form-control" style="cursor: pointer;"> 
+                            <button class="search-btn-nav" id="searchButton"><i class="fas fa-search"></i></button>
+                        </div>
+                        
+                        <a href="cart.html" id="cart-icon-container" class="position-relative text-decoration-none ms-1">
+                            <div class="cart-circle">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-light d-none" style="font-size: 0.75rem;">
+                                0
+                            </span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="search-hero">
+            <h2 class="section-title" style="color: var(--brown-text); font-size: 2rem; margin-bottom: 15px;">
+                Temukan <span class="text-warning">Selera</span> Favoritmu
+            </h2>
+            <p class="text-muted mb-4" style="font-size: 1.05rem;">Jelajahi berbagai makanan & minuman lezat dari vendor terbaik.</p>
+            
+            <div class="input-group custom-hero-search-box">
+                <input type="text" id="liveSearchInput" placeholder="Mau makan apa hari ini?..." autocomplete="off" class="form-control">
+                <button class="btn search-btn-group" type="button" onclick="performSearch()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center result-title-container">
+            <h4 id="search-results-title">Memuat Produk...</h4>
+        </div>
+        
+        <div id="search-results-container" class="search-results-grid"></div>
+    </main>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>       
+        const initialVendors = [{ id: 1, name: 'Dapur Cepat Saji' }, { id: 2, name: 'Kopi Nusantara' }, { id: 3, name: 'Taco Loco' }];
+        let vendors = JSON.parse(localStorage.getItem('adminVendors')) || initialVendors;
+
+        function loadProducts() {
+            const defaultData = [
+                { id: 101, name: 'Classic Beef Burger', price: 35000, vendorId: 1, img: 'https://images.unsplash.com/photo-1568901346528-425dc23758b9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', desc: 'Burger Daging Sapi Klasik' },
+                { id: 102, name: 'Cheesy Hotdog Lumer', price: 28000, vendorId: 1, img: 'https://images.unsplash.com/photo-1541544741938-0975850901df?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', desc: 'Hotdog dengan lelehan keju mozzarella' },
+                { id: 201, name: 'Boba Brown Sugar Milk', price: 25000, vendorId: 2, img: 'https://images.unsplash.com/photo-1598425270146-a4c3756317b9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', desc: 'Susu segar dengan boba gula aren' },
+                { id: 301, name: 'Spicy Chicken Taco', price: 38000, vendorId: 3, img: 'https://images.unsplash.com/photo-1552332386-f8dd0060d402?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', desc: 'Taco Meksiko dengan ayam pedas' },
+            ];
+            const storedProducts = localStorage.getItem('feastfoundProducts');
+            if (storedProducts) { return JSON.parse(storedProducts); } else { localStorage.setItem('feastfoundProducts', JSON.stringify(defaultData)); return defaultData; }
+        }
+        
+        let products = loadProducts(), cart = JSON.parse(localStorage.getItem('feastfoundCart')) || [];
+            
+        function getVendorName(id){ const v = vendors.find(v => v.id === id); return v ? v.name : 'Vendor'; }
+        const formatRupiah = (n) => new Intl.NumberFormat('id-ID', { minimumFractionDigits: 0 }).format(n);
+        function viewVendorShop(id) { window.location.href = 'vendor_shop.html?vendorId=' + id; }
+
+
+        function updateAuthButton() {
+            const b = document.getElementById('authButton');
+            if (localStorage.getItem('role') === 'User') { b.textContent = 'LOGOUT'; b.onclick = logout; b.classList.add('btn-danger'); } 
+            else { b.textContent = 'LOGIN'; b.onclick = handleAuth; b.classList.remove('btn-danger'); }
+        }
+        function logout() { if (confirm('Yakin ingin keluar?')) { localStorage.removeItem('role'); localStorage.removeItem('userEmail'); localStorage.removeItem('feastfoundCart'); localStorage.removeItem('checkoutItems'); cart = []; updateCartCount(); updateAuthButton(); window.location.href = 'index.html'; } }
+        function handleAuth(e) { if (localStorage.getItem('role') === 'User') { e.preventDefault(); logout(); } else { window.location.href = 'login.html'; } }
+        function performSearch() { executeSearch(); }
+        function updateCartCount() { const c = cart.reduce((t, i) => t + i.quantity, 0); const b = document.getElementById('cart-count'); if(b){ b.textContent = c; c > 0 ? b.classList.remove('d-none') : b.classList.add('d-none'); } }
+
+
+        function buyNow(id) { if (localStorage.getItem('role') !== 'User') { alert('Harap Login sebagai User.'); window.location.href = 'login.html'; return; } const p = products.find(x => x.id === id); let itemInCart = cart.find(x => x.id === id); if (!itemInCart) { itemInCart = { ...p, quantity: 1, selected: true }; cart.push(itemInCart); } else { itemInCart.selected = true; } localStorage.setItem('feastfoundCart', JSON.stringify(cart)); updateCartCount(); localStorage.setItem('checkoutItems', JSON.stringify([itemInCart])); window.location.href = 'checkout.html'; }
+        function addToCart(id) { if (localStorage.getItem('role') !== 'User') { alert('Harap Login sebagai User.'); window.location.href = 'login.html'; return; } const p = products.find(x => x.id === id), e = cart.find(x => x.id === id); e ? e.quantity++ : cart.push({ ...p, quantity: 1, selected: true }); localStorage.setItem('feastfoundCart', JSON.stringify(cart)); updateCartCount(); alert(p.name + ' berhasil masuk keranjang!'); }
+
+        
+        function executeSearch() {
+            const input = document.getElementById('liveSearchInput');
+            const query = input.value.toLowerCase().trim();
+            const container = document.getElementById('search-results-container');
+            const title = document.getElementById('search-results-title');
+            let results = [], isRandom = false;
+            
+            if (query === '') {
+                results = [...products].sort(() => 0.5 - Math.random()).slice(0, 8); isRandom = true;
+            } else {
+                results = products.filter(p => { const vName = getVendorName(p.vendorId).toLowerCase(); return `${p.name} ${p.desc} ${vName}`.toLowerCase().includes(query); });
+            }
+            renderProducts(results, container);
+            title.innerHTML = isRandom ? `Rekomendasi Untukmu` : `Hasil Pencarian: <span class="text-warning">"${input.value}"</span> (${results.length})`;
+        }
+
+        
+        function renderProducts(list, container) {
+            if(list.length === 0) { 
+                container.innerHTML = `
+                <div class="col-12 empty-state">
+                    <i class="fas fa-search fa-5x mb-4"></i>
+                    <h4>Yah, produk tidak ditemukan.</h4>
+                    <p class="text-muted">Coba gunakan kata kunci lain yang lebih umum.</p>
+                </div>`; 
+                container.style.display = 'block'; return; 
+            }
+            container.style.display = 'grid';
+            container.innerHTML = list.map(p => `
+                <div class="product-card">
+                    <img src="${p.img}" alt="${p.name}" onclick="viewVendorShop(${p.vendorId})" style="cursor:pointer;">
+                    <div class="vendor-badge"><i class="fas fa-store me-1"></i> ${getVendorName(p.vendorId)}</div>
+                    
+                    <h3 onclick="viewVendorShop(${p.vendorId})" style="cursor:pointer;" title="${p.name}">${p.name}</h3>
+                    <span class="price-tag">Rp ${formatRupiah(p.price)}</span>
+                    
+                    <div class="product-action-buttons">
+                        <button class="btn-buy-now" onclick="buyNow(${p.id})">Beli Sekarang</button>
+                        <button class="btn-add-cart-icon" onclick="addToCart(${p.id})" title="Tambah ke Keranjang"><i class="fas fa-cart-plus"></i></button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const input = document.getElementById('liveSearchInput');
+            const initQuery = localStorage.getItem('searchQuery') || '';
+            input.value = initQuery;
+            localStorage.removeItem('searchQuery'); 
+            
+            executeSearch();
+            input.addEventListener('input', executeSearch);
+            input.addEventListener('keypress', (e)=>{if(e.key==='Enter') executeSearch()});
+            
+          const navSearchInput = document.getElementById('searchInput');
+            if(navSearchInput) {
+                 navSearchInput.addEventListener('keypress', (e)=>{
+                    if(e.key==='Enter') {
+                        input.value = navSearchInput.value; 
+                        executeSearch(); 
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                });
+            }
+
+            updateCartCount(); updateAuthButton();
+        }); 
+    </script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keranjang Belanja - FEASTFOUND</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet"> 
+    
+    <style>
+        body { padding-top: 120px; background-image: radial-gradient(circle at center, #ec9393, #ca664b, #b47846);}
+
+        /* NAVBAR */
+        .header-container {
+            background-color: rgba(50, 28, 2, 0.872); 
+            padding: 15px 25px; 
+            border-radius: 50px;
+            margin: 20px 20px 0 20px;
+             box-shadow: 0 4px 8px rgb(147, 5, 5);
+            height: 80px;
+        }
+
+        /* Tombol Navigasi */
+        .custom-nav-btn {
+            background-color: #f0a359 !important;
+            border: none !important;
+            color: white !important;
+            font-weight: bold;
+            font-size: 1rem;
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin: 0 5px;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .custom-nav-btn:hover { background-color: #e55c0a !important; transform: translateY(-2px); }
+        .custom-nav-btn.btn-danger { background-color: #dc3545 !important; }
+
+        .nav-logo img { height: 45px; width: auto; border-radius: 50%; border: 2px solid #f0a359; transition: transform 0.3s; }
+
+        
+        /* Cart  */
+        .cart-circle {
+            width: 45px; height: 45px; 
+            background:#f0a359; color:white; border-radius:50%; 
+            display:flex; align-items:center; justify-content:center; 
+            box-shadow:0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .cart-item {
+            background: white; border: 1px solid #eee; border-radius: 12px;
+            padding: 20px; margin-bottom: 15px; display: flex; align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .cart-item:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        
+        .cart-item-info { flex-grow: 1; padding: 0 15px; font-weight: 600; color: #4b3832; }
+        .quantity-controls button { width: 30px; height: 30px; border-radius: 50%; border: none; background: #eee; font-weight: bold; cursor: pointer; }
+        .quantity-controls input { width: 40px; text-align: center; border: none; background: transparent; font-weight: bold; outline: none; }
+        .delete-btn { color: #dc3545; background: none; border: none; font-size: 1.2rem; margin-left: 15px; cursor: pointer; }
+        
+        .cart-summary { 
+            background: white; padding: 25px; border-radius: 15px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: right; margin-top: 30px; display: none;
+        }
+        .cart-summary button { padding: 12px 35px; font-size: 1.1rem; border-radius: 50px; font-weight: bold; background-color: #28a745; border: none; color: white; transition: 0.3s; cursor: pointer; }
+        .cart-summary button:hover { background-color: #218838; transform: translateY(-2px); }
+
+        /* SEARCH BAR */
+.search-container { margin-right: 15px; max-width: 300px; }
+.search-container #searchInput {
+    padding: 8px 10px; height: 45px; font-size: 1em; 
+    border: 1px solid #7c5747; border-radius: 4px 0 0 4px; 
+    outline: none; transition: border-color 0.2s; background-color: white; 
+}
+.search-container #searchInput:focus { border-color: #f0a359; }
+.search-container .btn-primary { 
+    background-color: #f0a359; color: white; border: 1px solid #f0a359; 
+    padding: 8px 15px; height: 45px; cursor: pointer; border-radius: 0 4px 4px 0; 
+    transition: background-color 0.2s;
+}
+.search-container .btn-primary:hover { background-color: #e55c0a; border-color: #e55c0a; }
+    </style>
+</head>
+<body>
+
+    <header class="header-container fixed-top" style="height: auto !important; min-height: 80px; padding: 15px 25px; display: flex; align-items: center; transition: all 0.3s;">
+        <nav class="navbar navbar-expand-lg p-0 w-100">
+            <div class="container-fluid p-0">
+                
+                <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#cartNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse flex-column flex-lg-row justify-content-between align-items-center w-100" id="cartNavbar">
+                    
+                    <div class="d-lg-none w-100 my-3" style="border-top: 1px dashed #d19f65;"></div>
+
+                    <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-1 nav-links mb-3 mb-lg-0">
+                        <a href="login.html" id="authButton" onclick="handleAuth(event)" class="btn custom-nav-btn auth-btn">LOGIN</a>
+                        <a href="index.html" class="btn custom-nav-btn">HOME</a>
+                        <a href="index.html#product-list" class="btn custom-nav-btn">MENU</a>
+                        <a href="index.html#about-section" class="btn custom-nav-btn">ABOUT</a>
+                        <a href="index.html#contact-section" class="btn custom-nav-btn">CONTACT</a>
+                    </div>
+
+                    <div class="nav-logo mx-3 text-center mb-3 mb-lg-0">
+                        <a href="index.html"><img src="logopbl.png" alt="Logo" class="logo-img" style="height: 45px;"></a>
+                    </div>
+
+                    <div class="d-flex justify-content-center justify-content-lg-end align-items-center search-and-cart mb-3 mb-lg-0">
+                        <div class="input-group search-container me-3" style="max-width: 250px;"> 
+                            <input type="text" placeholder="Cari..." class="form-control form-control-sm" id="searchInput" style="cursor: pointer;"> 
+                            <button class="btn btn-primary btn-sm" id="searchButton"><i class="fas fa-search"></i></button>
+                        </div>
+                        
+                        <a href="cart.html" id="cart-icon-container" class="position-relative text-decoration-none">
+                            <div class="cart-circle"><i class="fas fa-shopping-cart"></i></div>
+                            <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-light d-none">0</span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="container" style="max-width: 900px;">
+            <h2 class="mb-4 text-center" style="color: #4b3832; font-weight: 800;">
+                <i class="fas fa-shopping-cart me-2 text-warning"></i> Keranjang Belanja
+            </h2>
+            
+            <div id="cart-items-container"></div>
+
+            <div class="cart-summary">
+                <h4 class="mb-3">Total Pesanan: <span id="cart-total" style="color: #e55c0a; font-weight: bold; font-size: 1.5rem;">Rp 0</span></h4>
+                <button class="btn btn-success rounded-pill px-5 py-3 fw-bold shadow" onclick="checkout()" style="font-size: 1.1rem;">
+                    <i class="fas fa-credit-card me-2"></i> Lanjutkan Pembayaran
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const baseProducts = [
+            { id: 101, name: 'Classic Beef Burger', price: 35000, vendorId: 1, img: 'burger.jpg', desc: 'Burger Daging Sapi Klasik' },
+            { id: 102, name: 'Cheesy Hotdog', price: 28000, vendorId: 1, img: 'hotdog.jpg', desc: 'Hotdog dengan lelehan keju' },
+            { id: 201, name: 'Boba Brown Sugar', price: 25000, vendorId: 2, img: 'boba.jpg', desc: 'Boba dengan gula merah khas' },
+            { id: 202, name: 'Es Kopi Susu', price: 22000, vendorId: 2, img: 'kopsus.jpg', desc: 'Kopi susu dingin racikan spesial' },
+            { id: 301, name: 'Chicken Taco', price: 38000, vendorId: 3, img: 'ctaco.jpg', desc: 'Taco isi ayam panggang' },
+            { id: 401, name: 'Strawberry Waffle', price: 30000, vendorId: 1, img: 'swaffle.jpg', desc: 'Waffle dengan es krim strawberry' }
+        ];
+        
+        function loadProducts() { 
+             const storedProducts = JSON.parse(localStorage.getItem('feastfoundProducts'));
+             if (!storedProducts || storedProducts.length === 0) {
+                 console.log("Menggunakan data default (baseProducts)");
+                 localStorage.setItem('feastfoundProducts', JSON.stringify(baseProducts));
+                 return baseProducts;
+             }
+             return storedProducts; 
+        }
+        
+        const vendors = [{ id: 1, name: 'Dapur Cepat Saji' }, { id: 2, name: 'Kopi Nusantara' }, { id: 3, name: 'Taco Loco' }];
+        const formatRupiah = (n) => new Intl.NumberFormat('id-ID', { minimumFractionDigits: 0 }).format(n);
+        
+        let products = loadProducts(); 
+        let cart = JSON.parse(localStorage.getItem('feastfoundCart')) || [];
+
+        function updateAuthButton() {
+            const b = document.getElementById('authButton');
+            if (localStorage.getItem('role') === 'User') {
+                b.textContent = 'LOGOUT'; b.onclick = logout; b.classList.add('btn-danger');
+            } else {
+                b.textContent = 'LOGIN'; b.onclick = handleAuth; b.classList.remove('btn-danger');
+            }
+        }
+
+        function logout() {
+            if (confirm('Yakin ingin keluar?')) {
+                localStorage.removeItem('role'); localStorage.removeItem('userEmail'); 
+                localStorage.removeItem('feastfoundCart'); localStorage.removeItem('checkoutItems');
+                cart = []; updateCartCount(); renderCart(); window.location.href = 'index.html';
+            }
+        }
+
+        function handleAuth(e) { if (localStorage.getItem('role') === 'User') { e.preventDefault(); logout(); } else { window.location.href = 'login.html'; } }
+
+        function updateCartCount() { const c = cart.reduce((t, i) => t + i.quantity, 0); const b = document.getElementById('cart-count'); if(b){ b.textContent=c; c>0?b.classList.remove('d-none'):b.classList.add('d-none'); } }
+        function toggleSelection(id) { const i=cart.find(x=>x.id==id); if(i){i.selected=!i.selected; localStorage.setItem('feastfoundCart', JSON.stringify(cart)); renderCart();} }
+        function removeItem(id) { if(confirm("Hapus?")){ cart=cart.filter(x=>x.id!=id); localStorage.setItem('feastfoundCart', JSON.stringify(cart)); updateCartCount(); renderCart(); } }
+        
+        function changeQuantity(id, delta) { 
+            const i=cart.find(x=>x.id==id); 
+            if(i){ 
+                i.quantity+=delta; 
+                if(i.quantity<1){ removeItem(id); return; } 
+                localStorage.setItem('feastfoundCart', JSON.stringify(cart)); 
+                renderCart(); updateCartCount(); 
+            } 
+        }
+
+        function checkout() { 
+            const s=cart.filter(i=>i.selected); 
+            if(s.length===0){alert('Pilih item dulu'); return;} 
+            localStorage.setItem('checkoutItems', JSON.stringify(s)); 
+            window.location.href='checkout.html'; 
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-items-container');
+            const totalEl = document.getElementById('cart-total');
+            const summaryBox = document.querySelector('.cart-summary');
+            
+            if(!container) return; 
+            container.innerHTML = ''; 
+            let total = 0;
+
+            cart = cart.filter(item => products.some(p => p.id == item.id));
+
+            if(cart.length === 0) { 
+                container.innerHTML = '<div class="text-center p-5"><i class="fas fa-shopping-basket fa-4x text-muted mb-3" style="opacity:0.5"></i><p class="lead text-muted">Keranjang kosong.</p><a href="index.html" class="btn btn-primary rounded-pill mt-2" style="background:#f0a359; border:none;">Mulai Belanja</a></div>'; 
+                summaryBox.style.display='none'; 
+                localStorage.setItem('feastfoundCart', JSON.stringify(cart));
+                return; 
+            }
+            
+            summaryBox.style.display='block';
+
+            cart.forEach(item => {
+                const p = products.find(x => x.id == item.id);
+                
+                if (p) {
+                    item.name = p.name;
+                    item.price = p.price;
+                    item.img = p.img; 
+                } else {
+                    return; 
+                }
+                
+                const sub = p.price * item.quantity;
+                if(item.selected) total += sub;
+                
+                container.innerHTML += `
+                    <div class="cart-item">
+                        <input type="checkbox" onchange="toggleSelection(${item.id})" ${item.selected?'checked':''} style="width:22px; height:22px; margin-right:20px; accent-color:#f0a359; cursor:pointer;">
+                        
+                        <img src="${p.img}" alt="${p.name}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; margin-right: 15px;" onerror="this.onerror=null; this.src='https://via.placeholder.com/60x60?text=No+Img';">
+
+                        <div style="flex-grow:1;">
+                            <h5 style="margin:0; color:#4b3832; font-weight:bold; font-size:1.2rem;">${p.name}</h5>
+                            <small style="color:#888;">@ Rp ${formatRupiah(p.price)}</small>
+                        </div>
+                        <div class="quantity-controls me-4">
+                            <button onclick="changeQuantity(${item.id}, -1)">-</button>
+                            <input type="text" value="${item.quantity}" readonly>
+                            <button onclick="changeQuantity(${item.id}, 1)">+</button>
+                        </div>
+                        <div style="min-width:120px; text-align:right; font-weight:bold; color:#e55c0a; font-size:1.1rem;">Rp ${formatRupiah(sub)}</div>
+                        <button class="delete-btn" onclick="removeItem(${item.id})"><i class="fas fa-trash-alt"></i></button>
+                    </div>`;
+            });
+            totalEl.textContent = "Rp " + formatRupiah(total);
+            localStorage.setItem('feastfoundCart', JSON.stringify(cart)); 
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if(localStorage.getItem('role') !== 'User'){ alert('Login dulu.'); window.location.href='login.html'; return; }
+            
+            renderCart(); 
+            updateCartCount(); 
+            updateAuthButton();
+            
+            const searchBtn = document.getElementById('searchButton');
+            const searchInput = document.getElementById('searchInput');
+            function goSearch(){
+                localStorage.setItem('searchQuery', searchInput.value); 
+                window.location.href='search_results.html';
+            }
+            if(searchBtn) searchBtn.addEventListener('click', goSearch);
+            if(searchInput) { 
+                searchInput.addEventListener('click', goSearch); 
+                searchInput.addEventListener('focus', goSearch); 
+            }
+        });
+    </script>
+</body>
+</html>
